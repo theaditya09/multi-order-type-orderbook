@@ -77,7 +77,7 @@ private:
         if(!bids_.empty()){
             auto& [_, bids] = *bids_.begin();
             auto& bid = bids.front();
-            if(bid -> GetOrderType() == OrderType::FillOrKill) {
+            if(bid -> GetOrderType() == OrderType::FillAndKill) {
                 CancelOrder(bid->GetOrderId());
             }
         }
@@ -85,7 +85,7 @@ private:
         if(!asks_.empty()){
             auto& [_, asks] = *asks_.begin();
             auto& ask = asks.front();
-            if(ask -> GetOrderType() == OrderType::FillOrKill) {
+            if(ask -> GetOrderType() == OrderType::FillAndKill) {
                 CancelOrder(ask->GetOrderId());
             }
         }
@@ -97,7 +97,7 @@ public:
     Trades AddOrder(OrderPointer order){
         if(orders_.contains(order->GetOrderId())) return {};
 
-        if(order->GetOrderType() == OrderType::FillOrKill && !CanMatch(order->GetOrderSide(), order->GetPrice())) return {};
+        if(order->GetOrderType() == OrderType::FillAndKill && !CanMatch(order->GetOrderSide(), order->GetPrice())) return {};
 
         OrderPointers::iterator iterator;
         if(order->GetOrderSide() == OrderSide::Buy) {
